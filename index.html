@@ -65,9 +65,17 @@
     cursor: pointer;
   }
 
-  .spacer {
-    height: 100px;
-  }
+.spacer {
+  height: 100px;
+}
+
+/* Adjust heights for smaller screens */
+@media (max-width: 2028px) { .spacer { height: 139px; } }
+@media (max-width: 1058px) { .spacer { height: 181px; } }
+@media (max-width: 748px)  { .spacer { height: 219px; } }
+@media (max-width: 540px)  { .spacer { height: 254px; } }
+@media (max-width: 514px)  { .spacer { height: 288px; } }
+
 
   #background {
     position: fixed;
@@ -107,16 +115,16 @@
 <body>
 
 <div class="controls">
-  <label for="desktop-bg">Desktop Background URL:</label>
+  <label for="desktop-bg">Desktop Skin URL:</label>
   <input id="desktop-bg" type="text" placeholder="https://example.com/desktop_bg.jpg">
 
-  <label for="mobile-bg-color">Mobile Background Hex:</label>
+  <label for="mobile-bg-color">Mobile/Desktop Skin Hex Code:</label>
   <input id="mobile-bg-color" type="color" value="#ff0000">
 
   <label for="desktop-1x1">1x1 Promo URL:</label>
   <input id="desktop-1x1" type="text" placeholder="https://example.com/1x1.jpg">
 
-  <label for="desktop-4x1">Desktop 4x1 Promo URL:</label>
+  <label for="desktop-4x1">Desktop 4x1 Banner URL:</label>
   <input id="desktop-4x1" type="text" placeholder="https://example.com/desktop_4x1.jpg">
 
   <label for="button-toggle">Button Type:</label>
