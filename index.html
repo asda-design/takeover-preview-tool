@@ -1348,6 +1348,11 @@ More Asda Websites" transform="translate(20 2730)" fill="#3d3d3d" font-size="16"
 </svg>
 `;
 
+// Display empty preview on page load
+document.addEventListener("DOMContentLoaded", function () {
+  loadPreview();
+})
+
 // Load Preview
 function loadPreview() {
   const isDesktop = viewToggle.value === 'desktop';
