@@ -13,7 +13,7 @@
     overflow-x: hidden;
     background: #000;
   }
-
+ 
   .controls {
     position: fixed;
     top: 0;
@@ -29,14 +29,14 @@
     border-bottom: 1px solid #444;
     box-sizing: border-box;
   }
-
+ 
   .controls label {
     flex: 0 0 auto;
     color: #fff;
     font-size: 13px;
     white-space: nowrap;
   }
-
+ 
   .controls input[type="text"], .controls input[type="color"], .controls select {
     flex: 1 1 200px;
     min-width: 150px;
@@ -49,7 +49,7 @@
     border-radius: 4px;
     font-size: 14px;
   }
-
+ 
   .controls button {
     flex: 0 0 auto;
     background: #538316;
@@ -59,24 +59,113 @@
     border-radius: 4px;
     font-size: 14px;
   }
-
+ 
   .controls button:hover {
     background: #555;
     cursor: pointer;
   }
-
+ 
+  /* --- Hamburger menu --- */
+  .menu-wrapper {
+    position: relative;
+    margin-left: auto;
+    flex: 0 0 auto;
+  }
+ 
+  .menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    width: 36px;
+    height: 32px;
+    background: #222;
+    border: 1px solid #444;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0;
+  }
+ 
+  .menu-toggle:hover {
+    background: #333;
+  }
+ 
+  .menu-toggle span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: #fff;
+    border-radius: 1px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+ 
+  .menu-toggle.open span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+ 
+  .menu-toggle.open span:nth-child(2) {
+    opacity: 0;
+  }
+ 
+  .menu-toggle.open span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+ 
+  .menu-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 200px;
+    background: rgba(30, 30, 30, 0.98);
+    border: 1px solid #444;
+    border-radius: 6px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    z-index: 200;
+ 
+    /* Hidden by default */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+  }
+ 
+  .menu-dropdown.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+ 
+  .menu-dropdown a {
+    display: block;
+    padding: 10px 14px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    border-bottom: 1px solid #3a3a3a;
+  }
+ 
+  .menu-dropdown a:last-child {
+    border-bottom: none;
+  }
+ 
+  .menu-dropdown a:hover {
+    background: #538316;
+  }
+ 
 .spacer {
   height: 100px;
 }
-
+ 
 /* Adjust heights for smaller screens */
 @media (max-width: 2028px) { .spacer { height: 139px; } }
 @media (max-width: 1058px) { .spacer { height: 181px; } }
 @media (max-width: 748px)  { .spacer { height: 219px; } }
 @media (max-width: 540px)  { .spacer { height: 254px; } }
 @media (max-width: 514px)  { .spacer { height: 288px; } }
-
-
+ 
+ 
   #background {
     position: fixed;
     top: 0;
@@ -88,7 +177,7 @@
     background-attachment: fixed;
     z-index: 1;
   }
-
+ 
   #svg-container {
     position: relative;
     z-index: 2;
@@ -97,51 +186,66 @@
     justify-content: center;
     margin-top: -50px;
   }
-
+ 
   #svg-container svg {
     width: 100%;
     max-width: 1920px;
     height: auto;
     display: block;
   }
-
+ 
   /* Mobile SVG max width */
   #category_mobile {
     max-width: 450px !important;
   }
-
+ 
 </style>
 </head>
 <body>
-
+ 
 <div class="controls">
   <label for="desktop-bg">Desktop Skin URL:</label>
   <input id="desktop-bg" type="text" placeholder="https://example.com/desktop_bg.jpg">
-
+ 
   <label for="mobile-bg-color">Mobile/Desktop Skin Hex Code:</label>
-  <input id="mobile-bg-color" type="color" value="#ff0000">
-
+  <input id="mobile-bg-color" type="color" value="#ffffff">
+ 
   <label for="desktop-1x1">1x1 Promo URL:</label>
-  <input id="desktop-1x1" type="text" placeholder="https://example.com/1x1.jpg">
-
+  <input id="desktop-1x1" type="text" placeholder="https://example.com/moblie_1x1.jpg">
+ 
+  <label for="desktop-1x1">1x1 Mobile Tile URL</label>
+  <input type="text" id="tile1Input" placeholder="https://example.com/1x1.jpg">
+ 
   <label for="desktop-4x1">Desktop 4x1 Banner URL:</label>
   <input id="desktop-4x1" type="text" placeholder="https://example.com/desktop_4x1.jpg">
-
+ 
   <label for="button-toggle">Button Type:</label>
   <select id="button-toggle">
     <option value="primary" selected>Primary</option>
     <option value="secondary">Secondary</option>
   </select>
-
+ 
   <label for="view-toggle">View:</label>
   <select id="view-toggle">
     <option value="desktop" selected>Desktop</option>
     <option value="mobile">Mobile</option>
   </select>
-
+ 
   <button id="load">Load</button>
+ 
+  <div class="menu-wrapper">
+    <button class="menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="menu-dropdown" id="menu-dropdown">
+      <a href="https://www.asda.com/guidelines-home">Asda Guidelines Homepage</a>
+      <a href="https://asda-design.github.io/banner-size-tool/">Asda Banner Size Checker</a>
+    </div>
+  </div>
 </div>
-
+ 
 <div class="spacer"></div>
 <div id="background"></div>
 <div id="svg-container"></div>
@@ -1006,7 +1110,7 @@ const mobileSVG = `
     <text id="Search_for_" data-name="Search for…" transform="translate(30 92)" fill="#767676" font-size="16" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="0">Search for…</tspan></text>
   </g>
   <rect id="Rectangle_46" data-name="Rectangle 46" width="352" height="2235" transform="translate(20 121)" fill="#fff"/>
-  <g id="promo_1x1" transform="translate(26 134)" fill="#fff">
+  <g id="tile_1x1" transform="translate(26 134)" fill="#fff">
     <path d="M 338.5 338.5 L 0.5 338.5 L 0.5 0.5 L 338.5 0.5 L 338.5 338.5 Z" stroke="none"/>
     <path d="M 1 1 L 1 338 L 338 338 L 338 1 L 1 1 M 0 0 L 339 0 L 339 339 L 0 339 L 0 0 Z" stroke="none" fill="#707070"/>
   </g>
@@ -1353,6 +1457,11 @@ document.addEventListener("DOMContentLoaded", function () {
   loadPreview();
 })
 
+// Display empty preview on page load
+document.addEventListener("DOMContentLoaded", function () {
+  loadPreview();
+});
+
 // Load Preview
 function loadPreview() {
   const isDesktop = viewToggle.value === 'desktop';
@@ -1380,30 +1489,91 @@ function loadPreview() {
   // Replace all promo_1x1 elements with same image
   const promo1URL = promo1Input.value.trim();
   const promo1Groups = svgContainer.querySelectorAll('#promo_1x1');
+
   if (promo1URL && promo1Groups.length) {
     promo1Groups.forEach(group => {
-      const width = isDesktop ? (group.querySelector('rect')?.getAttribute('width') || 100) : 339;
-      const height = isDesktop ? (group.querySelector('rect')?.getAttribute('height') || 100) : 339;
-      group.innerHTML = `<image href="${promo1URL}" x="0" y="0" width="${width}" height="${height}" preserveAspectRatio="xMidYMid slice"/>`;
+      const width = isDesktop
+        ? (group.querySelector('rect')?.getAttribute('width') || 100)
+        : 339;
+
+      const height = isDesktop
+        ? (group.querySelector('rect')?.getAttribute('height') || 100)
+        : 339;
+
+      group.innerHTML = `
+        <image
+          href="${promo1URL}"
+          x="0"
+          y="0"
+          width="${width}"
+          height="${height}"
+          preserveAspectRatio="xMidYMid slice"
+        />
+      `;
     });
+  }
+
+  // Replace tile_1x1 (mobile only)
+  if (!isDesktop) {
+    const tile1URL = tile1Input.value.trim();
+    const tile1Groups = svgContainer.querySelectorAll('#tile_1x1');
+
+    if (tile1URL && tile1Groups.length) {
+      tile1Groups.forEach(group => {
+        const rect = group.querySelector('rect');
+
+        const width = rect
+          ? rect.getAttribute('width')
+          : 339;
+
+        const height = rect
+          ? rect.getAttribute('height')
+          : 339;
+
+        group.innerHTML = `
+          <image
+            href="${tile1URL}"
+            x="0"
+            y="0"
+            width="${width}"
+            height="${height}"
+            preserveAspectRatio="xMidYMid slice"
+          />
+        `;
+      });
+    }
   }
 
   // Replace promo 4x1 (desktop only)
   if (isDesktop) {
     const promo4URL = desktop4x1Input.value.trim();
     const promo4Group = svgContainer.querySelector('#promo_4x1');
+
     if (promo4URL && promo4Group) {
       const rect = promo4Group.querySelector('rect');
       const width = rect ? rect.getAttribute('width') : 100;
       const height = rect ? rect.getAttribute('height') : 100;
-      promo4Group.innerHTML = `<image href="${promo4URL}" x="0" y="0" width="${width}" height="${height}" preserveAspectRatio="xMidYMid slice"/>`;
+
+      promo4Group.innerHTML = `
+        <image
+          href="${promo4URL}"
+          x="0"
+          y="0"
+          width="${width}"
+          height="${height}"
+          preserveAspectRatio="xMidYMid slice"
+        />
+      `;
     }
   }
 
   // Mobile background rect color
   if (!isDesktop) {
     const mobileBgRect = svgContainer.querySelector('#mobile_bg');
-    if (mobileBgRect) mobileBgRect.setAttribute('fill', mobileHex);
+
+    if (mobileBgRect) {
+      mobileBgRect.setAttribute('fill', mobileHex);
+    }
   }
 
   applyButtonToggle();
@@ -1412,6 +1582,7 @@ function loadPreview() {
 // Button toggle
 function applyButtonToggle() {
   const selected = buttonToggle.value;
+
   const primary = svgContainer.querySelector('#shop_now_primary');
   const secondary = svgContainer.querySelector('#shop_now_secondary');
 
@@ -1429,6 +1600,24 @@ function applyButtonToggle() {
 loadButton.addEventListener('click', loadPreview);
 buttonToggle.addEventListener('change', applyButtonToggle);
 viewToggle.addEventListener('change', loadPreview);
+
+const menuToggle = document.getElementById('menu-toggle');
+  const menuDropdown = document.getElementById('menu-dropdown');
+ 
+  menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = menuDropdown.classList.toggle('open');
+    menuToggle.classList.toggle('open', isOpen);
+    menuToggle.setAttribute('aria-expanded', isOpen);
+  });
+ 
+  document.addEventListener('click', (e) => {
+    if (!menuToggle.contains(e.target) && !menuDropdown.contains(e.target)) {
+      menuDropdown.classList.remove('open');
+      menuToggle.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
 </script>
 
 </body>
